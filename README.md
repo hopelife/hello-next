@@ -1,9 +1,10 @@
+## 참조 페이지
 - [Learn Next.js](https://nextjs.org/learn/basics/)
 - [github/zeit/next-learn-demo](https://github.com/zeit/next-learn-demo)
 - [Next.js 튜토리얼](https://brunch.co.kr/@hee072794/81)
 - [github/hopelife/hello-next](https://github.com/hopelife/hello-next)
 
-## settings
+## 환경설정
 
 ### github repository
 
@@ -154,8 +155,208 @@ export default Index
 
 
 ### Next.js 튜토리얼 3편: 공유 컴포넌트
+> [Using Shared Components](https://nextjs.org/learn/basics/using-shared-components/create-the-header-component)
+
+#### Create the Header Component
+
+- components/Header.js
+
+```javascript
+import Link from 'next/link'
+
+const linkStyle = {
+  marginRight: 15
+}
+
+const Header = () => (
+  <div>
+    <Link href="/">
+      <a style={linkStyle}>Home</a>
+    </Link>
+    <Link href="/about">
+      <a style={linkStyle}>About</a>
+    </Link>
+  </div>
+)
+
+export default Header
+```
+
+- pages/index.js
+
+```javascript
+import Header from '../components/Header'
+
+export default function Index() {
+  return (
+    <div>
+      <Header />
+      <p>Hello Next.js</p>
+    </div>
+  )
+}
+```
+
+- pages/about.js
+
+```javascript
+import Header from '../components/Header'
+
+export default function About() {
+  return (
+    <div>
+      <Header />
+      <p>This is the about page</p>
+    </div>
+  )
+}
+```
+
+#### The Layout Component
+
+- components/MyLayout.js
+
+```javascript
+import Header from './Header'
+
+const layoutStyle = {
+  margin: 20,
+  padding: 20,
+  border: '1px solid #DDD'
+}
+
+const Layout = props => (
+  <div style={layoutStyle}>
+    <Header />
+    {props.children}
+  </div>
+)
+
+export default Layout
+```
+
+- pages/index.js
+
+```javascript
+import Layout from '../components/MyLayout.js'
+
+export default function Index() {
+  return (
+    <Layout>
+      <p>Hello Next.js</p>
+    </Layout>
+  )
+}
+```
+
+- pages/about.js
+
+```javascript
+import Layout from '../components/MyLayout.js'
+
+export default function About() {
+  return (
+    <Layout>
+      <p>This is the about page</p>
+    </Layout>
+  )
+}
+```
+
+#### Rendering Child Components
+
+##### Method 1 - Layout as a Higher Order Component
+
+- components/MyLayout.js
+
+```javascript
+import Header from './Header'
+
+const layoutStyle = {
+  margin: 20,
+  padding: 20,
+  border: '1px solid #DDD'
+}
+
+const withLayout = Page => {
+  return () => (
+    <div style={layoutStyle}>
+      <Header />
+      <Page />
+    </div>
+  )
+}
+
+export default withLayout
+```
+
+- pages/index.js
+
+```javascript
+import withLayout from '../components/MyLayout'
+
+const Page = () => <p>Hello Next.js</p>
+
+export default withLayout(Page)
+```
+
+- pages/about.js
+
+```javascript
+import withLayout from '../components/MyLayout'
+
+const Page = () => <p>This is the about page</p>
+
+export default withLayout(Page)
+```
+
+##### Method 2 - Page content as a prop
+
+- components/MyLayout.js
+
+```javascript
+import Header from './Header'
+
+const layoutStyle = {
+  margin: 20,
+  padding: 20,
+  border: '1px solid #DDD'
+}
+
+const Layout = props => (
+  <div style={layoutStyle}>
+    <Header />
+    {props.content}
+  </div>
+)
+
+export default Layout
+```
 
 
+- pages/index.js
+```javascript
+import Layout from '../components/MyLayout.js'
+
+const indexPageContent = <p>Hello Next.js</p>
+
+export default function Index() {
+  return <Layout content={indexPageContent} />
+}
+```
+
+
+- pages/about.js
+
+```javascript
+import Layout from '../components/MyLayout.js'
+
+const aboutPageContent = <p>This is the about page</p>
+
+export default function About() {
+  return <Layout content={aboutPageContent} />
+}
+```
 
 ### Next.js 튜토리얼 4편: 동적 페이지
 
