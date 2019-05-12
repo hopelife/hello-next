@@ -1,0 +1,28 @@
+{
+  "name": "hello-next",
+  "version": "1.0.0",
+  "description": "- [Learn Next.js](https://nextjs.org/learn/basics/) - [github/zeit/next-learn-demo](https://github.com/zeit/next-learn-demo) - [Next.js 튜토리얼](https://brunch.co.kr/@hee072794/81) - [github/hopelife/hello-next](https://github.com/hopelife/hello-next)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hopelife/hello-next.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hopelife/hello-next/issues"
+  },
+  "homepage": "https://github.com/hopelife/hello-next#readme",
+  "dependencies": {
+    "next": "^8.1.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  }
+}

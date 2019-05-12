@@ -54,8 +54,65 @@ yarn-error.log*
 ## 튜토리얼
 
 ### Next.js 튜토리얼 1편: 시작하기
+> [Getting Started](https://nextjs.org/learn/basics/getting-started)
 
+#### install
+- install next
+```bash
+training/web_app/front_end/reactjs/hello-next$ npm init -y
+training/web_app/front_end/reactjs/hello-next$ npm install --save react react-dom next
+training/web_app/front_end/reactjs/hello-next$ mkdir pages
+```
 
+- package.json
+```javascript
+{
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  }
+}
+```
+
+- run dev
+```bash
+training/web_app/front_end/reactjs/hello-next$ npm run dev
+```
+
+- browser
+```chrome
+http://localhost:3000
+
+~~~ result
+404
+This page could not be found.
+```
+
+#### Create First Page
+- pages/index.js
+```javascript
+const Index = () => (
+  <div>
+    <p>Hello Next.js</p>
+  </div>
+)
+
+export default Index
+```
+
+- run dev
+```bash
+training/web_app/front_end/reactjs/hello-next$ npm run dev
+```
+
+- browser
+```chrome
+http://localhost:3000
+
+~~~ result
+Hello Next.js
+```
 
 ### Next.js 튜토리얼 2편: 페이지 이동
 
