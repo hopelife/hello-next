@@ -734,5 +734,75 @@ And here's the content.
 
 
 ### Next.js 튜토리얼 9편: 배포하기
+> [Deploying a Next.js App](https://nextjs.org/learn/basics/deploying-a-nextjs-app)
+
+#### Build and Start
+
+- package.json
+```json
+"scripts": {
+  "build": "next build",
+  "start": "next start"
+}
+```
+
+- build start
+```bash
+training/web_app/front_end/reactjs/hello-next$ npm run build
+training/web_app/front_end/reactjs/hello-next$ npm run start
+```
 
 
+#### Run two instances
+
+- package.json
+```json
+"scripts": {
+  "build": "next build",
+  "start": "next start -p $PORT"
+}
+```
+
+- build start
+```bash
+training/web_app/front_end/reactjs/hello-next$ npm run build
+training/web_app/front_end/reactjs/hello-next$ PORT=8000 npm start
+training/web_app/front_end/reactjs/hello-next$ PORT=9000 npm start
+```
+
+
+#### Deploying to ▲ZEIT Now
+
+- package.json
+```json
+"scripts": {
+  "build": "next build",
+  "now-build": "next build"
+}
+```
+
+- next.config.js
+```javascript
+module.exports = {
+  target: 'serverless'
+}
+```
+
+- now.json
+```json
+{
+  "version": 2,
+  "builds": [{ "src": "package.json", "use": "@now/next" }]
+}
+```
+
+
+- build start
+```bash
+training/web_app/front_end/reactjs/hello-next$ npm run now-build
+
+training/web_app/front_end/reactjs/hello-next$ now
+
+~~~
+zsh: command not found: now
+```
