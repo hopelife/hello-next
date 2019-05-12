@@ -115,7 +115,42 @@ Hello Next.js
 ```
 
 ### Next.js 튜토리얼 2편: 페이지 이동
+> [Navigate Between Pages](https://nextjs.org/learn/basics/navigate-between-pages)
 
+#### Introduction
+- pages/about.js
+```javascript
+export default function About() {
+  return (
+    <div>
+      <p>This is the about page</p>
+    </div>
+  )
+}
+```
+
+- browser
+```chrome
+http://localhost:3000/about
+```
+
+#### Using Link
+- pages/index.js
+```javascript
+// This is the Link API
+import Link from 'next/link'
+
+const Index = () => (
+  <div>
+    <Link href="/about">
+      <a title="About Page">About Page</a>
+    </Link>
+    <p>Hello Next.js</p>
+  </div>
+)
+
+export default Index
+```
 
 
 ### Next.js 튜토리얼 3편: 공유 컴포넌트
