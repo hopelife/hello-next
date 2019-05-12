@@ -513,12 +513,224 @@ app
 training/web_app/front_end/reactjs/hello-next$ npm run dev
 ```
 
-### Next.js 튜토리얼 7편: 데이터 가져오기
 
+### Next.js 튜토리얼 7편: 데이터 가져오기
+> [Fetching Data for Pages](https://nextjs.org/learn/basics/fetching-data-for-pages)
+
+#### create git branch
+
+```bash
+training/web_app/front_end/reactjs/hello-next$ git branch fetch_data
+training/web_app/front_end/reactjs/hello-next$ git checkout fetch_data
+```
+
+#### Fetching Batman Shows
+
+- install
+
+```bash
+training/web_app/front_end/reactjs/hello-next$ npm install --save isomorphic-unfetch
+```
+
+- pages/index.js
+
+```javascript
+import Layout from '../components/MyLayout.js'
+import Link from 'next/link'
+import fetch from 'isomorphic-unfetch'
+
+const Index = (props) => (
+  <Layout>
+    <h1>Batman TV Shows</h1>
+    <ul>
+      {props.shows.map(show => (
+        <li key={show.id}>
+          <Link as={`/p/${show.id}`} href={`/post?id=${show.id}`}>
+            <a>{show.name}</a>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  </Layout>
+)
+
+Index.getInitialProps = async function() {
+  const res = await fetch('https://api.tvmaze.com/search/shows?q=batman')
+  const data = await res.json()
+
+  console.log(`Show data fetched. Count: ${data.length}`)
+
+  return {
+    shows: data.map(entry => entry.show)
+  }
+}
+
+export default Index
+```
+
+
+- server.js
+
+```javascript
+server.get('/p/:id', (req, res) => {
+  const actualPage = '/post'
+  const queryParams = { id: req.params.id }
+  app.render(req, res, actualPage, queryParams)
+})
+```
+
+
+- pages/post.js
+
+```javascript
+import Layout from '../components/MyLayout.js'
+import fetch from 'isomorphic-unfetch'
+
+const Post = props => (
+  <Layout>
+    <h1>{props.show.name}</h1>
+    <p>{props.show.summary.replace(/<[/]?p>/g, '')}</p>
+    <img src={props.show.image.medium} />
+  </Layout>
+)
+
+Post.getInitialProps = async function(context) {
+  const { id } = context.query
+  const res = await fetch(`https://api.tvmaze.com/shows/${id}`)
+  const show = await res.json()
+
+  console.log(`Fetched show: ${show.name}`)
+
+  return { show }
+}
+
+export default Post
+```
 
 
 ### Next.js 튜토리얼 8편: 컴포넌트 스타일링
 
+> [Styling Components](https://nextjs.org/learn/basics/styling-components)
+
+#### change git branch to master
+```bash
+training/web_app/front_end/reactjs/hello-next$ git checkout master
+```
+
+#### Styling our home page
+
+- pages/index.js
+
+```javascript
+import Layout from '../components/MyLayout.js'
+import Link from 'next/link'
+
+function getPosts() {
+  return [
+    { id: 'hello-nextjs', title: 'Hello Next.js' },
+    { id: 'learn-nextjs', title: 'Learn Next.js is awesome' },
+    { id: 'deploy-nextjs', title: 'Deploy apps with ZEIT' }
+  ]
+}
+
+export default function Blog() {
+  return (
+    <Layout>
+      <h1>My Blog</h1>
+      <ul>
+        {getPosts().map(post => (
+          <li key={post.id}>
+            <Link as={`/p/${post.id}`} href={`/post?title=${post.title}`}>
+              <a>{post.title}</a>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <style jsx>{`
+        h1,
+        a {
+          font-family: 'Arial';
+        }
+
+        ul {
+          padding: 0;
+        }
+
+        li {
+          list-style: none;
+          margin: 5px 0;
+        }
+
+        a {
+          text-decoration: none;
+          color: blue;
+        }
+
+        a:hover {
+          opacity: 0.6;
+        }
+      `}</style>
+    </Layout>
+  )
+}
+```
+
+
+#### Global Styles
+
+- install 
+
+```bash
+training/web_app/front_end/reactjs/hello-next$ npm install --save react-markdown
+```
+
+
+- pages/post.js
+
+```javascript
+import Layout from '../components/MyLayout.js'
+import { withRouter } from 'next/router'
+import Markdown from 'react-markdown'
+
+export default withRouter(props => (
+  <Layout>
+    <h1>{props.router.query.title}</h1>
+    <div className="markdown">
+      <Markdown
+        source={`
+This is our blog post.
+Yes. We can have a [link](/link).
+And we can have a title as well.
+
+### This is a title
+
+And here's the content.
+     `}
+      />
+    </div>
+    <style jsx global>{`
+      .markdown {
+        font-family: 'Arial';
+      }
+
+      .markdown a {
+        text-decoration: none;
+        color: blue;
+      }
+
+      .markdown a:hover {
+        opacity: 0.6;
+      }
+
+      .markdown h3 {
+        margin: 0;
+        padding: 0;
+        text-transform: uppercase;
+      }
+    `}</style>
+  </Layout>
+))
+```
 
 
 ### Next.js 튜토리얼 9편: 배포하기
