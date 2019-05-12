@@ -9782,7 +9782,7 @@ var Page = Object(next_router__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(functi
 
 /***/ }),
 
-/***/ 2:
+/***/ 0:
 /*!**************************************************************************************************************************************************************************************!*\
   !*** multi next-client-pages-loader?page=%2Fpost&absolutePagePath=%2FVolumes%2Fdata%2Fdev%2FSynologyDrive%2Ftraining%2Fweb_app%2Ffront_end%2Freactjs%2Fhello-next%2Fpages%2Fpost.js ***!
   \**************************************************************************************************************************************************************************************/
@@ -9805,5 +9805,5 @@ module.exports = dll_1aef2d0bbc0d334d831c;
 
 /***/ })
 
-},[[2,"static/runtime/webpack.js"]]]);
+},[[0,"static/runtime/webpack.js"]]]);
 //# sourceMappingURL=post.js.map

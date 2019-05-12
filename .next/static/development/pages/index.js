@@ -9831,7 +9831,7 @@ function Blog() {
 
 /***/ }),
 
-/***/ 0:
+/***/ 1:
 /*!***********************************************************************************************************************************************************************************!*\
   !*** multi next-client-pages-loader?page=%2F&absolutePagePath=%2FVolumes%2Fdata%2Fdev%2FSynologyDrive%2Ftraining%2Fweb_app%2Ffront_end%2Freactjs%2Fhello-next%2Fpages%2Findex.js ***!
   \***********************************************************************************************************************************************************************************/
@@ -9854,5 +9854,5 @@ module.exports = dll_1aef2d0bbc0d334d831c;
 
 /***/ })
 
-},[[0,"static/runtime/webpack.js"]]]);
+},[[1,"static/runtime/webpack.js"]]]);
 //# sourceMappingURL=index.js.map

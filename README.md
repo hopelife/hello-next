@@ -446,9 +446,72 @@ export default function Blog() {
 }
 ```
 
-### Next.js 튜토리얼 6편: 서버 사이드
+### Next.js 튜토리얼 6편: 서버 사이드 URL
+
+#### Server Side Support for Clean URLs
+
+- install express
+
+```bash
+training/web_app/front_end/reactjs/hello-next$ npm install --save express
+```
 
 
+- server.js
+
+```javascript
+const express = require('express')
+const next = require('next')
+
+const dev = process.env.NODE_ENV !== 'production'
+const app = next({ dev })
+const handle = app.getRequestHandler()
+
+app
+  .prepare()
+  .then(() => {
+    const server = express()
+
+    server.get('/p/:id', (req, res) => {
+      const actualPage = '/post'
+      const queryParams = { title: req.params.id }
+      app.render(req, res, actualPage, queryParams)
+    })
+
+    server.get('*', (req, res) => {
+      return handle(req, res)
+    })
+
+    server.listen(3000, err => {
+      if (err) throw err
+      console.log('> Ready on http://localhost:3000')
+    })
+  })
+  .catch(ex => {
+    console.error(ex.stack)
+    process.exit(1)
+  })
+```
+
+
+- package.json
+
+```json
+{
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js"
+  }
+}
+```
+
+
+- run server
+
+```bash
+training/web_app/front_end/reactjs/hello-next$ npm run dev
+```
 
 ### Next.js 튜토리얼 7편: 데이터 가져오기
 
