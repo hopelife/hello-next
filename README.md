@@ -359,8 +359,61 @@ export default function About() {
 ```
 
 ### Next.js 튜토리얼 4편: 동적 페이지
+> [Create Dynamic Pages](https://nextjs.org/learn/basics/create-dynamic-pages)
 
+#### Adding a list of posts
 
+- pages/index.js
+
+```javascript
+import Layout from '../components/MyLayout.js'
+import Link from 'next/link'
+
+const PostLink = props => (
+  <li>
+    <Link href={`/post?title=${props.title}`}>
+      <a>{props.title}</a>
+    </Link>
+  </li>
+)
+
+export default function Blog() {
+  return (
+    <Layout>
+      <h1>My Blog</h1>
+      <ul>
+        <PostLink title="Hello Next.js" />
+        <PostLink title="Learn Next.js is awesome" />
+        <PostLink title="Deploy apps with Zeit" />
+      </ul>
+    </Layout>
+  )
+}
+```
+
+#### Passing Data via Query Strings
+
+- pages/post.js
+
+```javascript
+import { withRouter } from 'next/router'
+import Layout from '../components/MyLayout.js'
+
+const Content = props => (
+  <div>
+    <h1>{props.router.query.title}</h1>
+    <p>This is the blog post content.</p>
+  </div>
+)
+
+const Page = withRouter(props => (
+  <Layout>
+    <Content />
+  </Layout>
+))
+
+export default Page
+```
 
 ### Next.js 튜토리얼 5편: 라우트 마스킹
 
