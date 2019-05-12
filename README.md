@@ -514,7 +514,97 @@ training/web_app/front_end/reactjs/hello-next$ npm run dev
 ```
 
 ### Next.js 튜토리얼 7편: 데이터 가져오기
+> [Fetching Data for Pages](https://nextjs.org/learn/basics/fetching-data-for-pages)
 
+#### create git branch
+
+```bash
+training/web_app/front_end/reactjs/hello-next$ git branch fetch_data
+training/web_app/front_end/reactjs/hello-next$ git checkout fetch_data
+```
+
+#### Fetching Batman Shows
+
+- install
+
+```bash
+training/web_app/front_end/reactjs/hello-next$ npm install --save isomorphic-unfetch
+```
+
+- pages/index.js
+
+```javascript
+import Layout from '../components/MyLayout.js'
+import Link from 'next/link'
+import fetch from 'isomorphic-unfetch'
+
+const Index = (props) => (
+  <Layout>
+    <h1>Batman TV Shows</h1>
+    <ul>
+      {props.shows.map(show => (
+        <li key={show.id}>
+          <Link as={`/p/${show.id}`} href={`/post?id=${show.id}`}>
+            <a>{show.name}</a>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  </Layout>
+)
+
+Index.getInitialProps = async function() {
+  const res = await fetch('https://api.tvmaze.com/search/shows?q=batman')
+  const data = await res.json()
+
+  console.log(`Show data fetched. Count: ${data.length}`)
+
+  return {
+    shows: data.map(entry => entry.show)
+  }
+}
+
+export default Index
+```
+
+
+- server.js
+
+```javascript
+server.get('/p/:id', (req, res) => {
+  const actualPage = '/post'
+  const queryParams = { id: req.params.id }
+  app.render(req, res, actualPage, queryParams)
+})
+```
+
+
+- pages/post.js
+
+```javascript
+import Layout from '../components/MyLayout.js'
+import fetch from 'isomorphic-unfetch'
+
+const Post = props => (
+  <Layout>
+    <h1>{props.show.name}</h1>
+    <p>{props.show.summary.replace(/<[/]?p>/g, '')}</p>
+    <img src={props.show.image.medium} />
+  </Layout>
+)
+
+Post.getInitialProps = async function(context) {
+  const { id } = context.query
+  const res = await fetch(`https://api.tvmaze.com/shows/${id}`)
+  const show = await res.json()
+
+  console.log(`Fetched show: ${show.name}`)
+
+  return { show }
+}
+
+export default Post
+```
 
 
 ### Next.js 튜토리얼 8편: 컴포넌트 스타일링
